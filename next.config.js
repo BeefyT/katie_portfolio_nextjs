@@ -4,4 +4,8 @@ module.exports = {
   experimental: {
     appDir: true,
   },
+  env: {
+    email: "kittythecreativeartist@gmail.com",
+    emailpwd: "osavbhgtiuasjlxi",
+  },
 }
