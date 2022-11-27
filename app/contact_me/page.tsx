@@ -12,7 +12,7 @@ import {
   TwitterShareButton,
 } from "next-share"
 
-const ContactMe: React.FunctionComponent = (props) => {
+const ContactMe: React.FunctionComponent = () => {
   const [name, setName] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [message, setMessage] = useState<string>("")
@@ -23,33 +23,59 @@ const ContactMe: React.FunctionComponent = (props) => {
     window.location.href = mailto
   }
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
-    console.log("Sending")
-    let data = {
-      name,
-      email,
-      message,
-    }
 
-    fetch("/api/contact.js", {
-      method: "POST",
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }).then((res) => {
-      console.log("Response received")
-      if (res.status === 200) {
-        console.log("Response succeeded!")
-        setSubmitted(true)
-        setName("")
-        setEmail("")
-        setMessage("")
+    if (name && email && message) {
+      let data = {
+        name,
+        email,
+        message,
       }
-    })
+
+      try {
+        const res = await fetch(`api/contact`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+
+        const { error } = await res.json()
+      } catch (error) {
+        console.log("ERROR", error)
+      }
+    }
   }
+
+  // const handleSubmit = (e: any) => {
+  //   e.preventDefault()
+  //   console.log("Sending")
+  //   let data = {
+  //     name,
+  //     email,
+  //     message,
+  //   }
+
+  //   fetch("/api/contact.js", {
+  //     method: "POST",
+  //     headers: {
+  //       Accept: "application/json, text/plain, */*",
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(data),
+  //   }).then((res) => {
+  //     console.log("Response received")
+  //     if (res.status === 200) {
+  //       console.log("Response succeeded!")
+  //       setSubmitted(true)
+  //       setName("")
+  //       setEmail("")
+  //       setMessage("")
+  //     }
+  //   })
+  // }
 
   return (
     <div className="space-y-10 ">
