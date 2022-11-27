@@ -29,7 +29,7 @@ export default function (req, res) {
     host: "smtp.gmail.com",
     auth: {
       user: "kittythecreativeartist@gmail.com", //kittythecreative1@gmail.com
-      pass: "BakugoIsBombKing",
+      pass: "osavbhgtiuasjlxi",
     },
     secure: true,
   })
